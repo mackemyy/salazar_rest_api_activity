@@ -5,6 +5,8 @@ class NoteModify extends StatelessWidget {
   bool get isEditing => noteID != null;
   const NoteModify({Key? key, this.noteID}) : super(key: key);
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
