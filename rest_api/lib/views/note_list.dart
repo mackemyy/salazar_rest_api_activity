@@ -1,35 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:rest_api/models/note_for_listing.dart';
-import 'package:rest_api/views/note_delete.dart';
-
+import 'package:get_it/get_it.dart';
+import '../models/note_for_listing.dart';
+import '../services/notes_service.dart';
+import 'note_delete.dart';
 import 'note_modify.dart';
 
-class NoteList extends StatelessWidget {
+class NoteList extends StatefulWidget {
   NoteList({Key? key}) : super(key: key);
 
-  final notes = [
-    NoteForListing(
-      noteID: "1",
-      noteTitle: "Note 1",
-      createDateTime: DateTime.now(),
-      latestEditDateTime: DateTime.now(),
-    ),
-    NoteForListing(
-      noteID: "2",
-      noteTitle: "Note 2",
-      createDateTime: DateTime.now(),
-      latestEditDateTime: DateTime.now(),
-    ),
-    NoteForListing(
-      noteID: "3",
-      noteTitle: "Note 3",
-      createDateTime: DateTime.now(),
-      latestEditDateTime: DateTime.now(),
-    ),
-  ];
+  @override
+  State<NoteList> createState() => _NoteListState();
+}
+
+class _NoteListState extends State<NoteList> {
+  NotesService get service => GetIt.I<NotesService>();
+  List<NoteForListing> notes = [];
 
   String formatDateTime(DateTime dateTime) {
     return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+  }
+
+  @override
+  void initState() {
+    notes = service.getNotesList();
+    super.initState();
   }
 
   @override
@@ -54,15 +48,13 @@ class NoteList extends StatelessWidget {
           return Dismissible(
             key: ValueKey(notes[index].noteID),
             direction: DismissDirection.startToEnd,
-            onDismissed: (direction) {
-
-            },
+            onDismissed: (direction) {},
             confirmDismiss: (direction) async {
               final result = await showDialog(
-                context: context, 
+                context: context,
                 builder: (_) => const NoteDelete(),
               );
-              print(result);
+              //print(result);
               return result;
             },
             background: Container(
@@ -70,10 +62,10 @@ class NoteList extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16),
               child: const Align(
                 alignment: Alignment.centerLeft,
-                  child: Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
               ),
             ),
             child: ListTile(
@@ -83,8 +75,8 @@ class NoteList extends StatelessWidget {
               ),
               subtitle: Text(
                   'Last edited on ${formatDateTime(notes[index].latestEditDateTime)}'),
-              onTap: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => NoteModify(noteID: notes[index].noteID))),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => NoteModify(noteID: notes[index].noteID))),
             ),
           );
         },
