@@ -94,13 +94,13 @@ class _NoteModifyState extends State<NoteModify> {
                             _isLoading = false;
                           });
 
-                          final title = 'Done';
+                          const title = 'Done';
                           final text = result.error ? (result.errorMessage ?? 'An error occured') : 'Your note was updated.';
 
                           showDialog(
                             context: context, 
                             builder: (_) => AlertDialog(
-                              title: Text(title),
+                              title: const Text(title),
                               content: Text(text),
                               actions: <Widget>[
                                 ElevatedButton(
@@ -132,13 +132,13 @@ class _NoteModifyState extends State<NoteModify> {
                             _isLoading = false;
                           });
 
-                          final title = 'Done';
+                          const title = 'Done';
                           final text = result.error ? (result.errorMessage ?? 'An error occured') : 'Your note was created.';
 
                           showDialog(
                             context: context, 
                             builder: (_) => AlertDialog(
-                              title: Text(title),
+                              title: const Text(title),
                               content: Text(text),
                               actions: <Widget>[
                                 ElevatedButton(

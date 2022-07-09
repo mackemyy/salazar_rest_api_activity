@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart';
 import '../models/api_response.dart';
 import '../models/note_for_listing.dart';
 import '../services/notes_service.dart';
